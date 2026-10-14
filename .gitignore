@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+node_modules/
+dist/
+.env
+backend/data/
+backend/evals/last_run.json

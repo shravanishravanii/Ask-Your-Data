@@ -1,0 +1,14 @@
+services:
+  app:
+    build: .
+    ports: ["8080:8080"]
+    env_file: backend/.env
+    environment:
+      DATABASE_URL: ${DATABASE_URL:-sqlite:///./data/demo.db}
+  postgres:
+    profiles: ["pg"]
+    image: postgres:16
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: analytics
+    ports: ["5432:5432"]

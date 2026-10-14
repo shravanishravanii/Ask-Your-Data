@@ -1,0 +1,26 @@
+# Business context the LLM retrieves from (RAG). Edit this for your own data.
+tables:
+  sales:
+    description: One row per order line in a retail business. Use for revenue, units, discounting and regional performance.
+    columns:
+      order_id: Unique order line id
+      order_date: Date of the order (YYYY-MM-DD)
+      region: Sales region (North, South, East, West, Central)
+      category: Product category
+      product: Product name
+      channel: Sales channel (Online, Store, Partner)
+      units: Units sold
+      unit_price: List price per unit
+      discount_pct: Discount applied, as a percentage (0-30)
+      revenue: Net revenue for the line = units * unit_price * (1 - discount_pct/100)
+metrics:
+  - name: Revenue (sales)
+    definition: Total net revenue. "Sales" always means SUM(sales.revenue).
+  - name: Units sold
+    definition: SUM(sales.units).
+  - name: Average order value (AOV)
+    definition: SUM(revenue) / COUNT(DISTINCT order_id).
+  - name: Sales drop / decline / growth
+    definition: Month-over-month change = (this period revenue - previous period revenue) / previous period revenue. "Last month" means the previous full calendar month, compared with the month before it. Return both months and the % change per group, sorted by most negative change first.
+  - name: Discount rate
+    definition: Revenue-weighted average discount = SUM(units*unit_price*discount_pct/100) / SUM(units*unit_price).

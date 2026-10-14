@@ -1,0 +1,18 @@
+[
+  {"id": "total_rev", "question": "What is the total revenue?",
+   "gold_sql": "SELECT SUM(revenue) FROM sales"},
+  {"id": "rev_by_region", "question": "Total revenue by region",
+   "gold_sql": "SELECT region, SUM(revenue) FROM sales GROUP BY region"},
+  {"id": "top_products", "question": "Top 5 products by revenue",
+   "gold_sql": "SELECT product, SUM(revenue) r FROM sales GROUP BY product ORDER BY r DESC LIMIT 5"},
+  {"id": "monthly_rev", "question": "Monthly revenue trend",
+   "gold_sql": "SELECT strftime('%Y-%m', order_date) m, SUM(revenue) FROM sales GROUP BY m ORDER BY m"},
+  {"id": "units_category", "question": "How many units were sold in each category?",
+   "gold_sql": "SELECT category, SUM(units) FROM sales GROUP BY category"},
+  {"id": "aov_channel", "question": "Average order value by channel",
+   "gold_sql": "SELECT channel, SUM(revenue)*1.0/COUNT(DISTINCT order_id) FROM sales GROUP BY channel"},
+  {"id": "online_orders", "question": "How many distinct orders were placed online?",
+   "gold_sql": "SELECT COUNT(DISTINCT order_id) FROM sales WHERE channel='Online'"},
+  {"id": "west_electronics", "question": "Revenue from Electronics in the West region",
+   "gold_sql": "SELECT SUM(revenue) FROM sales WHERE region='West' AND category='Electronics'"}
+]
